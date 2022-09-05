@@ -1,0 +1,664 @@
+:root{
+    --size-circle-floor: 600px;
+    --inclin-circle-floor: 300px;
+    --top-floor-pos: 400px;
+    --speed-rotate: 0.4s;
+    --speed-change-im: 0.2s;
+    --elevation-floor: 30px;
+    --width-button-arrow: 70px;
+    --height-button-arrow: 6px;
+    --height-images: 350px;
+    --width-name: 400px;
+    --orange-glow: rgb(255, 200, 16);
+    --color-ring: rgba(255, 255, 255, 0.466);
+    --color-ring-opacity: rgba(255, 240, 144, 0.7);
+    --color-spotlight: rgba(255, 255, 255);
+    --color-spotlight-greenish: rgba(185, 255, 226, 0.616);
+    --color-spotlight-blur: rgb(255, 240, 144);
+    --color-rays1: rgb(255, 253, 140);
+    --color-rays2: rgb(176, 216, 113);
+    --color-rays3: rgb(255, 219, 166);
+    /* --color-rays1: rgb(255, 254, 184);
+    --color-rays2: rgb(221, 255, 167);
+    --color-rays3: rgb(255, 236, 173); */
+    --color-light-back: rgb(206, 255, 126);
+    /* --color-light-back: rgb(248, 255, 190); */
+    /* width rays */
+    --wr: 1.4deg;
+    --start-ray: -7;
+    --color-ray-round: rgb(184, 255, 170);
+}
+
+html{
+    font-family: "Albertus MT Std", sans-serif;
+    font-weight: 300;
+    overflow: hidden;
+    background-color: #000;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+	display: flex;
+    justify-content: center;
+    margin: 0;
+    align-self: stretch;
+    height: 100vh;
+    position: relative;
+    perspective: calc(var(--size-circle-floor) * 6);
+    perspective-origin: 50% calc(100vh - 650px);
+}
+
+#topTextDescription {
+    position: absolute;
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+    top: calc(100vh - 800px);
+    left: 50%;
+    transform:
+        translate(-50%, 0%)
+    ;
+    border: 1px #f00 solid;
+    color: #fff;
+    text-align: center;
+    text-shadow: #000 5px 5px 0px;
+}
+
+#rays {
+    position: absolute;
+    display: flex;
+    top: calc(100vh - 980px);
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform:
+        translate(-50%, 0%)
+    ;
+    overflow: hidden;
+}
+
+#beam2, #beam, #lightRound{
+    position: absolute;
+    left: 50%;
+    transform:
+        translate(-50%, -50%)
+    ;
+    mix-blend-mode: hard-light;
+}
+
+#beam2 {
+    top: 130px;
+    width: 15px;
+    height: 170px;
+    background-image: 
+        linear-gradient(#fff , #0000 70%)
+    ;
+    filter: blur(20px);
+}
+
+#beam {
+    top: 10px;
+    width: 120px;
+    height: 400px;
+    background-image: 
+        radial-gradient(#fff 40%, #0000 40%)
+    ;
+    filter: blur(20px);
+    animation: pulseBeam 0.6s infinite ease-in-out alternate;
+}
+
+@keyframes pulseBeam {
+    0%{
+        opacity: 100%;
+    }
+    100%{
+        opacity: 90%;
+    }
+}
+
+#lightRound {
+    top: 30px;
+    width: 400px;
+    height: 450px;
+    opacity: 60%;
+    background-image: 
+        radial-gradient(var(--color-ray-round) 40%, #0000 40%)
+    ;
+    filter: blur(50px);
+    animation: pulseRound 0.6s infinite ease-in-out alternate;
+}
+
+@keyframes pulseRound {
+    0%{
+        opacity: 60%;
+    }
+    100%{
+        opacity: 50%;
+    }
+}
+
+#light {
+    position: absolute;
+    top: 0px;
+    left: calc(50% - 60px);
+    width: 120px;
+    height: 410px;
+    transform-origin: center top;
+    transform:
+        perspective( 600px ) 
+        rotateX( 65deg )
+        translate(0%, 0%)
+    ;
+    opacity: 40%;
+    background-image: 
+        linear-gradient(var(--color-light-back) 35%, #0000 90%)
+    ;
+    filter: blur(3px);
+    mix-blend-mode: hard-light;
+}
+
+#raysLightTop, #raysLightTop .ray, #raysLightBack, #raysLightBack .ray {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 50%;
+    mix-blend-mode: hard-light;
+}
+
+#raysLightTop {
+    top: -120px;
+    width: 150px;
+    height: 500px;
+    transform:
+        translate(-50%, 0%)
+    ;
+    filter: blur(3px);
+}
+
+#raysLightTop .ray {
+    list-style-type: none;
+    transform-origin: center top;
+    top: 0;
+    opacity: 0;
+    animation: 
+        opacityRays infinite linear, 
+        moveRaysTop infinite linear
+    ;
+}
+
+
+@keyframes moveRaysTop{
+    0%{
+        transform:
+            translate(-50%, -25%)
+            perspective( 600px ) 
+            rotateX( 60deg )
+            translate(0%, 0%)
+            rotateZ(-7deg)
+        ;
+    }
+    100%{
+        transform:
+            translate(-50%, -25%)
+            perspective( 600px ) 
+            rotateX( 60deg )
+            translate(0%, 0%)
+            rotateZ(7deg)
+        ;
+    }
+}
+
+#raysLightBack {
+    top: -120px;
+    width: 150px;
+    height: 500px;
+    transform:
+        translate(-50%, 0%)
+    ;
+    filter: blur(4px);
+}
+
+#raysLightBack .ray {
+    list-style-type: none;
+    transform-origin: center top;
+    top: 0px;
+    height: 89%;
+    width: 14px;
+    background-image: 
+        linear-gradient(var(--color-rays1) 70%, #0000)
+    ;
+    opacity: 0;
+    animation: 
+        moveRays 2.5s infinite linear,
+        opacityRays 2.5s infinite linear
+    ;
+}
+
+@keyframes moveRays{
+    0%{
+        transform:
+            translate(-50%, -25%)
+            perspective( 600px ) 
+            rotateX( 60deg )
+            translate(0%, 0%)
+            rotateZ(-6deg)
+        ;
+    }
+    100%{
+        transform:
+            translate(-50%, -25%)
+            perspective( 600px ) 
+            rotateX( 60deg )
+            translate(0%, 0%)
+            rotateZ(6deg)
+        ;
+    }
+}
+
+@keyframes opacityRays{
+    0%{
+        opacity: 0%;
+    }
+    10%{
+        opacity: 30%;
+    }
+    90%{
+        opacity: 30%;
+    }
+    100%{
+        opacity: 0%;
+    }
+}
+
+#spotLight, #spotLightBlur{
+    position: absolute;
+    width: calc(250px * 0.6);
+    height: calc(250px * 0.85);
+    transform: 
+        translate(-50%, -50%)
+    ; 
+    left: 50%;
+    top: 71.7%;
+    background-repeat: 
+        no-repeat
+    ;
+    mix-blend-mode: hard-light;
+}
+
+#spotLight{
+    background-image: 
+        radial-gradient(
+            var(--color-spotlight),
+            var(--color-spotlight) 35%,
+            var(--color-spotlight-greenish) 47%,
+            #0000 48%, 
+            #0000
+        )
+    ;
+    filter: blur(3px);
+}
+
+#spotLightBlur{
+    background-image: 
+        radial-gradient(
+            var(--color-spotlight-blur), 
+            var(--color-spotlight-blur) 65%, 
+            #0000 65%, #0000
+        )
+    ;
+    filter: blur(15px);
+    animation: blurPulseSpotlight 0.4s infinite alternate ease-in-out;
+}
+
+@keyframes blurPulseSpotlight{
+    0%{
+        opacity: 50%;
+    }
+    100%{
+        opacity: 60%;
+    }
+}
+
+#backShadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(#000, #000 15%, #0000 70%, #0000)
+    ;
+    background-position: 
+        center
+    ;
+    background-repeat: 
+        no-repeat
+    ;
+    background-size: 
+        cover
+    ;
+}
+
+#ring, #ringBlur {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: hard-light;
+    background-position: 
+        50% 30px,
+        50% 30px
+    ;
+    background-repeat: 
+        no-repeat, 
+        no-repeat
+    ;
+    background-size: 
+        80% 100%, 
+        80% 100%
+    ;
+    animation: blurPulseRing 1.5s infinite alternate ease-in-out;
+}
+
+#ring {
+    background-image: 
+        radial-gradient(#0000, #0000 29.6%, 
+            var(--color-ring) 29.7%, var(--color-ring) 29.9%, 
+            #0000 30%, #0000)
+    ;
+}
+
+#ringBlur {
+    background-image: 
+        radial-gradient(#0000,
+            #0000 29%, 
+            #fff 29.8%, 
+            #0000 30.6%, #0000),
+        radial-gradient(#0000,
+            #0000 27.5%, 
+            var(--orange-glow) 30%, 
+            #0000 32.5%, #0000)
+    ;
+    filter: blur(7px);
+}
+
+@keyframes blurPulseRing{
+    0%{
+        opacity: 40%;
+    }
+    100%{
+        opacity: 80%;
+    }
+}
+
+#floorBackground {
+    position: absolute;
+	display: flex;
+    left: 50%;
+    top: calc(100vh - 450px);
+    width: calc(var(--size-circle-floor) * 3.5);
+    height: calc(var(--size-circle-floor) * 5.3);
+    transform-origin: center top;
+    background-image: 
+        radial-gradient(#0000, #000 50%,  #000),
+        url(tiles.jpg)
+    ;
+    background-position: 
+        center, 
+        center
+    ;
+    background-repeat: 
+        no-repeat, 
+        repeat
+    ;
+    background-size: 
+        cover, 
+        40% 40%
+    ;
+    transform:
+        translate(-50%, 0%)
+        translateZ(-150px)
+        rotateX(90deg)
+    ;
+}
+
+#imageTiles{
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    position: absolute;
+    border: #0ff 5px solid;
+}
+
+#carousel{
+	display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    flex-direction: column;
+}
+
+#floor {
+    justify-content: center;
+	display: flex;
+    position: relative;
+    height: 0px;
+    padding-bottom: var(--elevation-floor);
+    width: 100%;
+}
+
+#spots{
+    position: absolute;
+    list-style: none;
+	display: flex;
+    perspective: 1700px;
+    top: calc(var(--inclin-circle-floor) * -1.5);
+}
+
+#jack img{
+    transform: translate(-40%, -100%) !important; 
+}
+
+#images{
+    position: relative;
+    list-style: none;
+	display: flex;
+    perspective: 1700px;
+    top: calc(var(--inclin-circle-floor) * -1.5);
+}
+
+#images li{
+    position: absolute;
+    left: 50%;
+}
+
+#images img {
+    height: var(--height-images);
+    position: absolute;
+    transform: translate(-50%, -100%); 
+}
+
+/* .reflect img {
+    position: absolute !important;
+    transform: 
+        translate(-50%, -5%)
+        scaleY(-100%)
+        !important
+    ;
+    mix-blend-mode: overlay;
+} */
+
+#images .shadow {
+    display: none;
+}
+
+#spots li{
+    position: absolute;
+    left: 50%;
+    visibility: hidden;
+    transform: translateZ(1px);
+}
+
+.spot-back .front, .spot-front .back {
+    opacity: 0%;
+    transition: opacity var(--speed-change-im) ease;
+}
+
+.spot-back .back, .spot-front .front {
+    opacity: 100%;
+    transition: opacity var(--speed-change-im) ease;
+}
+
+#characterSelection{
+	display: flex;
+    align-items: flex-start;
+    align-self: stretch;
+    justify-content: center;
+    margin: 0px;
+    padding: 10px 0px 50px 0px;
+}
+
+#chName{
+    margin: 0px 50px;
+    width: var(--width-name);
+    text-align: center;
+    font-size: 40px;
+    color: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    height: 4ex;
+}
+
+#chNameShadow{
+    position: absolute;
+    z-index: -1;
+    filter: blur(0.35em);
+    opacity: 70%;
+    color: #000;
+    -webkit-text-stroke-width: 15px;
+    -webkit-text-stroke-color: #000;
+}
+
+#gauche, #droite {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    animation: extendArrow 0.7s infinite alternate ease-in-out;
+    z-index: 200;
+}
+
+#gauche {
+    transform-origin: right;
+    justify-content: end;
+}
+
+#droite {
+    transform-origin: left;
+    justify-content: start;
+}
+
+#gauche .arrow, #droite .arrow{
+    position: absolute;
+	width: 0px;
+	border-top: calc(var(--height-button-arrow) / 2) solid transparent;
+	border-bottom: calc(var(--height-button-arrow) / 2) solid transparent;
+}
+
+#gauche .arrow {
+	border-right: var(--width-button-arrow) solid #fff;
+}
+
+#droite .arrow {
+	border-left: var(--width-button-arrow) solid #fff;
+}
+
+#gauche .glowYellow, #droite .glowYellow {
+    position: absolute;
+	width: 0em;
+	border-top: calc(var(--height-button-arrow) / 0.6) solid transparent;
+	border-bottom: calc(var(--height-button-arrow) / 0.6) solid transparent;
+    filter: 
+        blur(calc(var(--width-button-arrow) / 10))
+    ;
+    mix-blend-mode: lighten;
+}
+
+#gauche .glowYellow {
+	border-right: calc(var(--width-button-arrow) * 1.5) solid var(--orange-glow);
+    right: calc(var(--width-button-arrow) / -14);
+}
+
+#droite .glowYellow {
+	border-left: calc(var(--width-button-arrow) * 1.5) solid var(--orange-glow);
+    left: calc(var(--width-button-arrow) / -14);
+}
+
+#gauche .glowWhite, #droite .glowWhite {
+    position: absolute;
+	width: 0em;
+	border-top: calc(var(--height-button-arrow) / 2) solid transparent;
+	border-bottom: calc(var(--height-button-arrow) / 2) solid transparent;
+    filter: 
+        blur(calc(var(--width-button-arrow) / 25))
+    ;
+    mix-blend-mode: lighten;
+}
+
+#gauche .glowWhite {
+	border-right: calc(var(--width-button-arrow) * 1.1) solid #fff;
+    right: calc(var(--width-button-arrow) / -50);
+}
+
+#droite .glowWhite {
+	border-left: calc(var(--width-button-arrow) * 1.1) solid #fff;
+    left: calc(var(--width-button-arrow) / -50);
+}
+
+@keyframes extendArrow{
+    0%{
+        transform:
+            scaleX(100%)
+        ;
+    }
+    100%{
+        transform:
+            scaleX(115%)
+        ;
+    }
+}
+
+#projection{
+    box-shadow: 
+        inset -30px -30px 30px #000,
+        inset 30px 30px 30px #000
+    ;
+    position: absolute;
+    top: calc(100vh - 880px);
+    width: 800px;
+    height: 450px;
+    background-image: 
+        linear-gradient(rgba(167, 204, 240, 0.4), rgba(171, 207, 240, 0.4)),
+        url("building.png")
+    ;
+    animation: pulseBackground 0.2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseBackground {
+    0%{
+        filter: brightness(50%);
+    }
+    20%{
+        filter: brightness(47%);
+    }
+    30%{
+        filter: brightness(47%);
+    }
+    85%{
+        filter: brightness(50%);
+    }
+    100%{
+        filter: brightness(47%);
+    }
+}
