@@ -18,14 +18,7 @@
     --color-rays1: rgb(255, 253, 140);
     --color-rays2: rgb(176, 216, 113);
     --color-rays3: rgb(255, 219, 166);
-    /* --color-rays1: rgb(255, 254, 184);
-    --color-rays2: rgb(221, 255, 167);
-    --color-rays3: rgb(255, 236, 173); */
     --color-light-back: rgb(206, 255, 126);
-    /* --color-light-back: rgb(248, 255, 190); */
-    /* width rays */
-    --wr: 1.4deg;
-    --start-ray: -7;
     --color-ray-round: rgb(184, 255, 170);
 }
 
@@ -51,18 +44,29 @@ body{
 
 #topTextDescription {
     position: absolute;
-    width: 80%;
+    width: 90%;
     max-width: 700px;
     height: auto;
-    bottom: calc(100vh - 220px);
+    top: calc(100vh - 830px);
     left: 50%;
     transform:
         translate(-50%, 0%)
     ;
-    /* border: 1px #f00 solid; */
-    color: #fff;
-    text-align: center;
+    color: rgb(231, 231, 231);
     font-size: 18px;
+}
+
+.hiddenHalf, #textTopShadow .hiddenHalf{
+    color: #0000;
+    text-shadow: none;
+}
+
+#textTopShadow{
+    position: absolute;
+    z-index: -1;
+    filter: blur(0.35em);
+    color: #000;
+    text-shadow: #000 0.3em 0, #000 -0.3em 0, #000 0 -0.2em, #000 0 0.2em;
 }
 
 #rays {
