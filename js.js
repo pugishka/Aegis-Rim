@@ -45,8 +45,10 @@ function loadFunction(){
     ulImages = document.getElementById("images");
     images = ulImages.getElementsByTagName("LI");
 
-    document.getElementById("chNameText").innerText = images[0].getAttribute("name");
-    document.getElementById("chNameShadow").innerText = images[0].getAttribute("name");
+    var nameCh = images[0].getAttribute("name");
+    document.getElementById("chNameText").innerText = nameCh;
+    document.getElementById("chNameShadow").innerText = nameCh;
+    topDescription(nameCh);
 
     var htmlSpot = ""
     rotSep = 360 / images.length;
@@ -75,6 +77,17 @@ function loadFunction(){
     matrixInitLoop();
 }
 
+function topDescription(name){
+    console.log(name);
+    var p = document.getElementById("topTextDescription").getElementsByTagName("p")[0];
+    fetch('descriptions.json')
+        .then((response) => response.json())
+        .then((json) => 
+            p.innerHTML = json[name]
+        );
+}
+
+
 function matrixInitLoop(){
     var i=0;
     var intervalMatrix = setInterval(function() {
@@ -88,13 +101,13 @@ function matrixInitLoop(){
 }
 
 function shadowInit(){
-    console.log("start");
+    // console.log("start");
     var max;
     var min;
     var spotStyle = window.getComputedStyle(spots[0], null);
     var spotTrans = spotStyle.getPropertyValue("transform");
-    console.log("1 : " + spotStyle);
-    console.log("2 : " + spotTrans);
+    // console.log("1 : " + spotStyle);
+    // console.log("2 : " + spotTrans);
     spotTrans = spotTrans.split(",")
     var pos = parseFloat(spotTrans[14]);
     if(isNaN(pos)){
@@ -103,20 +116,20 @@ function shadowInit(){
     }
     max = pos;
     min = pos;
-    console.log("3 : " + pos);
+    // console.log("3 : " + pos);
     for(var i = 1; i<spots.length; i++){
         spotStyle = window.getComputedStyle(spots[i], null);
         spotTrans = spotStyle.getPropertyValue("transform");
         spotTrans = spotTrans.split(",")
-        console.log("2.1 : " + spotTrans);
+        // console.log("2.1 : " + spotTrans);
         pos = parseFloat(spotTrans[14]);
-        console.log("4 : " + pos);
+        // console.log("4 : " + pos);
         if(isNaN(pos)){
             var rect = spots[i].getBoundingClientRect();
             pos = rect.top
-            console.log("5 : " + pos);
+            // console.log("5 : " + pos);
         }
-        console.log("6 : " + max);
+        // console.log("6 : " + max);
         if (pos >= max){
             max = pos;
         }
@@ -147,11 +160,11 @@ function shadowInit(){
 
     maxPosShadow = maxShadow;
 
-    console.log(brightnessMultShadow);
-    console.log(minBrightness);
-    console.log(maxBrightnessShadow);
-    console.log(min);
-    console.log(maxShadow);
+    // console.log(brightnessMultShadow);
+    // console.log(minBrightness);
+    // console.log(maxBrightnessShadow);
+    // console.log(min);
+    // console.log(maxShadow);
 
     // if(isNaN(maxPosShadow)){
     //     console.log(maxPosShadow + "   not")
@@ -236,8 +249,10 @@ function rotateIcon(dir) {
             images[i].classList.remove("spot-front");
             images[i].classList.add("spot-back");
             changeFrontSpot = false;
-            document.getElementById("chNameText").innerText = images[indSuivant].getAttribute("name");
-            document.getElementById("chNameShadow").innerText = images[indSuivant].getAttribute("name");
+            var nameCh = images[indSuivant].getAttribute("name");
+            document.getElementById("chNameText").innerText = nameCh;
+            document.getElementById("chNameShadow").innerText = nameCh;
+            topDescription(nameCh);
         }
 
     }
